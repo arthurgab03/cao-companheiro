@@ -9,7 +9,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  /// Lista de perfis que vão aparecer para o usuário, cada perfil tem nome, foto e distância visíveis ao usuário.
+  /// Lista de pets que vão aparecer para o usuário, cada perfil tem nome, foto e distância visíveis ao usuário.
   List<UserData> users = [
     UserData("Filó", "assets/icons/dog1.jpeg", "2km de distãncia", false),
     UserData(
@@ -40,8 +40,8 @@ class _MainPageState extends State<MainPage> {
 
             /// Construção do card que contém as informações dos perfis de pets.
             GestureDetector(
-              /// Aao clicar em qualquer área do card, chamamos a função _nextUser.
-              onTap: _nextUser,
+              /// Aao clicar em qualquer área do card, chamamos a função proxPet.
+              onTap: proxPet,
               child: Card(
                 margin: EdgeInsets.all(16.0),
                 color: users[currentIndex].favorited
@@ -79,25 +79,34 @@ class _MainPageState extends State<MainPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  /// Ao clicar neste botão, chamamos a função _previousUser
-                  IconButton(
-                    iconSize: 50,
-                    icon: Image.asset("assets/icons/voltar.png"),
-                    onPressed: _previousUser,
+                  /// Ao clicar neste botão, chamamos a função antPet e voltamos para o pet anterior.
+                  Tooltip(
+                    message: 'Pet anterior',
+                    child: IconButton(
+                      iconSize: 35,
+                      icon: Image.asset("assets/icons/osso.png"),
+                      onPressed: antPet,
+                    ),
                   ),
 
-                  /// Ao clicar neste botão, chamamos a função _toggleFavorite
-                  IconButton(
-                    iconSize: 50,
-                    icon: Image.asset("assets/icons/favorito.png"),
-                    onPressed: _toggleFavorite,
+                  /// Ao clicar neste botão, chamamos a função favoritar.
+                  Tooltip(
+                    message: 'Favoritar',
+                    child: IconButton(
+                      iconSize: 35,
+                      icon: Image.asset("assets/icons/distintivo.png"),
+                      onPressed: favoritar,
+                    ),
                   ),
 
-                  /// Ao clicar neste botão, chamamos a função _handleLike
-                  IconButton(
-                    iconSize: 50,
-                    icon: Image.asset("assets/icons/like.png"),
-                    onPressed: _handleLike,
+                  /// Ao clicar neste botão, chamamos a função match
+                  Tooltip(
+                    message: 'Curtir',
+                    child: IconButton(
+                      iconSize: 35,
+                      icon: Image.asset("assets/icons/cao.png"),
+                      onPressed: match,
+                    ),
                   ),
                 ],
               ),
@@ -127,7 +136,9 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/chat');
+                    },
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Image.asset("assets/icons/chat.png", height: 50),
@@ -155,7 +166,7 @@ class _MainPageState extends State<MainPage> {
 
   /// Função que leva ao perfil posterior ao perfil atual.
 
-  void _nextUser() {
+  void proxPet() {
     setState(() {
       currentIndex = (currentIndex + 1) % users.length;
     });
@@ -163,7 +174,7 @@ class _MainPageState extends State<MainPage> {
 
   ///Função que volta para o perfil anterior ao perfil atual.
 
-  void _previousUser() {
+  void antPet() {
     setState(() {
       currentIndex = (currentIndex - 1 + users.length) % users.length;
     });
@@ -171,30 +182,30 @@ class _MainPageState extends State<MainPage> {
 
   /// Função que realiza um toggle para perfis favoritados/não favoritados.
 
-  void _toggleFavorite() {
+  void favoritar() {
     setState(() {
       users[currentIndex].favorited = !users[currentIndex].favorited;
     });
   }
 
-  /// _handleLike invoca as funções seguintes para realizar o funcionamento do "match".
+  /// match invoca as funções seguintes para realizar o funcionamento do "match".
 
-  void _handleLike() {
-    bool isMatch = _checkForMatch();
+  void match() {
+    bool isMatch = checkMatch();
     if (isMatch) {
-      _showMatchDialog();
+      mostrarMatch();
     }
   }
 
   /// Booolean que verifica se deu "match".
 
-  bool _checkForMatch() {
+  bool checkMatch() {
     return Random().nextBool();
   }
 
   /// Função para mostrar a caixa de diálogo de "match".
 
-  void _showMatchDialog() {
+  void mostrarMatch() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -204,7 +215,7 @@ class _MainPageState extends State<MainPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/chat');
               },
               child: Text("Ir para o Chat"),
             ),

@@ -42,10 +42,10 @@ class ProfilePage extends StatelessWidget {
               /// Textos que contém informações secundárias sobre o perfil do usuário.
               /// *Observação* Fiz dois containers para que tivessem duas colunas com 3 imagens.
               SizedBox(height: 10),
-              _buildReadOnlyField('Nome', 'Hachi'),
-              _buildReadOnlyField('Número de Seguidores', '1000'),
-              _buildReadOnlyField('Número de Contas Seguindo', '500'),
-              _buildReadOnlyField('Idade', '2 anos e 5 meses'),
+              infos('Nome', 'Hachi'),
+              infos('Número de Seguidores', '1000'),
+              infos('Número de Contas Seguindo', '500'),
+              infos('Idade', '2 anos e 5 meses'),
               SizedBox(height: 20),
               Text(
                 'Minhas fotos',
@@ -59,9 +59,9 @@ class ProfilePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildSquarePhoto("assets/icons/hachi2.jpeg"),
-                    _buildSquarePhoto("assets/icons/hachi3.jpeg"),
-                    _buildSquarePhoto("assets/icons/hachi4.jpeg"),
+                    galeriaFoto("assets/icons/hachi2.jpeg"),
+                    galeriaFoto("assets/icons/hachi3.jpeg"),
+                    galeriaFoto("assets/icons/hachi4.jpeg"),
                   ],
                 ),
               ),
@@ -71,9 +71,9 @@ class ProfilePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildSquarePhoto("assets/icons/hachi5.jpeg"),
-                    _buildSquarePhoto("assets/icons/hachi1.jpeg"),
-                    _buildSquarePhoto("assets/icons/hachi6.jpeg"),
+                    galeriaFoto("assets/icons/hachi5.jpeg"),
+                    galeriaFoto("assets/icons/hachi1.jpeg"),
+                    galeriaFoto("assets/icons/hachi6.jpeg"),
                   ],
                 ),
               ),
@@ -119,7 +119,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildReadOnlyField(String label, String value) {
+  Widget infos(String label, String value) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -137,7 +137,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildSquarePhoto(String imagePath) {
+  Widget galeriaFoto(String imagePath) {
     return Container(
       width: 70,
       height: 70,
